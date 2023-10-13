@@ -1,9 +1,12 @@
 import { useState } from "react";
+import InputForm from "./InputForm";
+import TodoList from "./TodoList";
 
 export function Main() {
   const [todoItem, setTodoItem] = useState("");
   const [todos, setTodos] = useState([]);
   const [deadline, setDeadline] = useState("");
+
   const date = new Date();
 
   function setTime(target) {
@@ -11,108 +14,64 @@ export function Main() {
     const hour = selectedTime.split(":")[0];
     const minutes = selectedTime.split(":")[1];
 
-    setDeadline(() => [
-      {
-        hour,
-        minutes,
-      },
-    ]);
+    setDeadline(() => ({
+      hour,
+      minutes,
+    }));
   }
 
   function addTodo() {
+    if (!todoItem) return;
+
     if (!deadline) return;
 
     const currentHour = date.getHours();
     const currentMinutes = date.getMinutes();
 
-    // ? erst beim zweiten mal wird setRemaining... gecallt
-
-    const remainingHours = parseInt(deadline[0].hour) - currentHour;
-    const remainingMinutes = parseInt(deadline[0].minutes) - currentMinutes;
-
-    if (remainingHours < 0) {
-      // invalid time selected
-      return;
-    }
-
-    if (!todoItem) return;
-
     const item = {
-      id: Math.floor(Math.random() * 5000),
+      key: Math.floor(Math.random() * 5000),
       value: todoItem,
-      remainingHours,
-      remainingMinutes,
+      checked: false,
+      remainingHours: parseInt(deadline.hour) - currentHour,
+      remainingMinutes: parseInt(deadline.minutes) - currentMinutes,
     };
+
+    if (item.remainingHours <= 0 && item.remainingMinutes < 0) return;
 
     setTodos((oldList) => [...oldList, item]);
     setTodoItem("");
   }
 
-  function toggleTodo() {}
+  function toggleTodo(key, completed) {
+    setTodos((currentTodos) => {
+      return currentTodos.map((todo) => {
+        if (todo.key === key) {
+          return { ...todo, completed };
+        }
 
-  function deleteTodo(id) {
-    const newArray = todos.filter((todo) => todo.id !== id);
+        return todo;
+      });
+    });
+  }
+
+  function deleteTodo(key) {
+    const newArray = todos.filter((todo) => todo.key !== key);
     setTodos(newArray);
   }
 
   return (
     <main>
-      <div className="input-form flex">
-        <div className="input-box">
-          <input
-            type="text"
-            placeholder="Create new todo"
-            value={todoItem}
-            onChange={(e) => setTodoItem(() => e.target.value)}
-          />
-          <input
-            type="time"
-            className="fa-calender"
-            onChange={(e) => setTime(e.target.value)}></input>
-        </div>
-        <button
-          className="add"
-          onClick={() => addTodo()}>
-          Add todo
-        </button>
-      </div>
-      <div className="todo-list">
-        <ul className="todos">
-          {todos.map((todo) => {
-            return (
-              <li
-                className="todo-item flex"
-                key={todo.id}>
-                <div className="flex">
-                  <div
-                    className="checkbox"
-                    onClick={() => toggleTodo()}></div>
-                  <p className="todo-text">{todo.value}</p>
-                </div>
-                <div className="flex">
-                  <p className="time">
-                    <span>
-                      {todo.remainingMinutes < 0
-                        ? todo.remainingHours - 1
-                        : todo.remainingHours}
-                      h
-                    </span>
-                    <span>
-                      {todo.remainingMinutes < 0
-                        ? todo.remainingMinutes + 60
-                        : todo.remainingMinutes}
-                      min
-                    </span>
-                  </p>
-                  <button onClick={() => deleteTodo(todo.id)}>
-                    <i className="fa-solid fa-x xmark"></i>
-                  </button>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <InputForm
+        todoItem={todoItem}
+        setTodoItem={setTodoItem}
+        setTime={setTime}
+        addTodo={addTodo}
+      />
+      <TodoList
+        todos={todos}
+        toggleTodo={toggleTodo}
+        deleteTodo={deleteTodo}
+      />
     </main>
   );
 }
