@@ -15,8 +15,21 @@ function TodoItem({ todo, toggleTodo, deleteTodo }) {
       </div>
       <div className="flex">
         <p className="time">
-          {/* {todo.remainingHours === 0 && todo.remainingMinutes === 0 ? ( */}
-          <>
+          {todo.dayOfWeek && todo.date && !todo.selectedTime ? (
+            <span>
+              Für {todo.dayOfWeek} der {todo.date}
+            </span>
+          ) : !todo.dayOfWeek && !todo.date && todo.selectedTime ? (
+            <span>Für um {todo.selectedTime}</span>
+          ) : !todo.dayOfWeek && !todo.date && !todo.selectedTime ? (
+            <span></span>
+          ) : (
+            <span>
+              Für {todo.dayOfWeek} der {todo.date} um {todo.selectedTime}
+            </span>
+          )}
+
+          {/* <>
             <span>
               {todo.remainingMinutes < 0
                 ? todo.remainingHours - 1
@@ -29,10 +42,7 @@ function TodoItem({ todo, toggleTodo, deleteTodo }) {
                 : todo.remainingMinutes}
               min
             </span>
-          </>
-          {/* ) : (
-            <span></span>
-          )} */}
+          </> */}
         </p>
         <button onClick={() => deleteTodo(todo.key)}>
           <i className="fa-solid fa-x xmark"></i>

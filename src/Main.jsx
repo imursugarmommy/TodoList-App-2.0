@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputForm from "./InputForm";
 import TodoList from "./TodoList";
 
@@ -7,7 +7,16 @@ export function Main() {
   const [todos, setTodos] = useState([]);
   const [deadline, setDeadline] = useState("");
 
-  const date = new Date();
+  useEffect(() => {
+    const storedTodos = localStorage.getItem("todos");
+    if (storedTodos) {
+      setTodos(JSON.parse(storedTodos));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   function setTime(target) {
     const selectedTime = target;
@@ -15,25 +24,55 @@ export function Main() {
     const minutes = selectedTime.split(":")[1];
 
     setDeadline(() => ({
+      ...deadline,
+      selectedTime,
       hour,
       minutes,
+    }));
+  }
+
+  function setDay(target) {
+    const selectedDay = target;
+    const dayOfWeek = selectedDay.getDay();
+    const dayOfMonth = selectedDay.getDate();
+    const month = selectedDay.getMonth();
+    const year = selectedDay.getFullYear();
+    const days = [
+      "Sonntag",
+      "Montag",
+      "Dienstag",
+      "Mittwoch",
+      "Donnerstag",
+      "Freitag",
+      "Samstag",
+    ];
+
+    setDeadline(() => ({
+      ...deadline,
+      dayOfWeek: days[dayOfWeek],
+      date: dayOfMonth + "." + month + "." + year,
     }));
   }
 
   function addTodo() {
     if (!todoItem) return;
 
-    if (!deadline) return;
+    // if (!deadline) return;
 
-    const currentHour = date.getHours();
-    const currentMinutes = date.getMinutes();
+    // const date = new Date();
+    // const currentHour = date.getHours();
+    // const currentMinutes = date.getMinutes();
 
     const item = {
       key: Math.floor(Math.random() * 5000),
       value: todoItem,
       checked: false,
-      remainingHours: parseInt(deadline.hour) - currentHour,
-      remainingMinutes: parseInt(deadline.minutes) - currentMinutes,
+      time: deadline.selectedTime,
+      dayOfWeek: deadline.dayOfWeek,
+      date: deadline.date,
+      selectedTime: deadline.selectedTime,
+      // remainingHours: parseInt(deadline.hour) - currentHour,
+      // remainingMinutes: parseInt(deadline.minutes) - currentMinutes,
     };
 
     if (item.remainingHours <= 0 && item.remainingMinutes < 0) return;
@@ -65,6 +104,7 @@ export function Main() {
         todoItem={todoItem}
         setTodoItem={setTodoItem}
         setTime={setTime}
+        setDay={setDay}
         addTodo={addTodo}
       />
       <TodoList
