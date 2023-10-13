@@ -5,11 +5,13 @@ function InputForm({ todoItem, setTodoItem, setTime, addTodo }) {
     <div className="input-form flex">
       <div className="input-box">
         <input
+          className="add"
           type="text"
           placeholder="Create new todo"
           value={todoItem}
           onChange={(e) => setTodoItem(() => e.target.value)}
         />
+        <input type="date" />
         <input
           type="time"
           className="fa-calender"

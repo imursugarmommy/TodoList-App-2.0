@@ -41,6 +41,7 @@ body {
   overflow-x: hidden;
   display: grid;
   place-items: center;
+  background: var(--primary-color400);
 }
 
 /* A elements that don't have a class get default styles */
@@ -84,6 +85,10 @@ button {
 }
 
 :root {
+  --primary-color400: #415ca8;
+  --primary-color900: #162c6d;
+  --accent-color200: #5a7cc8;
+  --accent-color400: #5f82d0;
   --accent-color700: #d41d6d;
 }
 
@@ -91,25 +96,8 @@ button {
   display: flex;
 }
 
-.todos li:has(input:checked) .todo-text {
-  color: grey;
-  text-decoration: line-through;
-}
-
 .todos {
   padding-inline-start: 0;
-}
-
-.todo-item {
-  padding: 0.5rem 1rem;
-  border: 1px solid black;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.todo-item > * {
-  align-items: center;
-  gap: 1rem;
 }
 
 .time {
@@ -120,6 +108,8 @@ button {
 .xmark {
   cursor: pointer;
 }
+
+/* checkbox */
 
 .ui-checkbox {
   --secondary-color: #fff;
@@ -195,8 +185,6 @@ button {
   transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
 }
 
-/* actions */
-
 .ui-checkbox:hover {
   border-color: var(--accent-color700);
 }
@@ -225,4 +213,119 @@ button {
   box-shadow: none;
   transition: none;
   opacity: 1;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(100%);
+  cursor: pointer;
+}
+
+input[type="text"]::placeholder {
+  color: white;
+}
+
+.input-form {
+  width: 80vw;
+  gap: 1rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 4fr 1fr;
+
+  .input-box {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 2fr 1fr 1fr;
+
+    & > * {
+      padding: 0.6rem 1.4rem;
+    }
+
+    & input[type="text"] {
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+      border: 2px solid var(--accent-color700);
+      border-right: none;
+      outline: none;
+      background-color: var(--accent-color200);
+      color: white;
+    }
+
+    & input[type="time"] {
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+      border: 2px solid var(--accent-color700);
+      border-left: none;
+      outline: none;
+      text-align: right;
+      background-color: var(--accent-color200);
+      color: #fff;
+    }
+
+    & input[type="date"] {
+      font-size: 14px;
+      padding: 0;
+      text-align: right;
+      gap: 0.5rem;
+      outline: none;
+      border: 2px solid var(--accent-color700);
+      border-left: none;
+      border-right: none;
+      background-color: var(--accent-color200);
+      color: white;
+    }
+  }
+
+  & button {
+    border-radius: 30px;
+    outline: none;
+    border: none;
+    background: var(--accent-color700);
+    color: white;
+  }
+}
+
+.todo-item {
+  padding: 0.8rem 1.4rem;
+  border-radius: 14px;
+  background-color: var(--primary-color900);
+  width: 100%;
+  justify-content: space-between;
+  margin-block: 1rem;
+  box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.25);
+
+  & input[type="checkbox"]:not(:checked) {
+    background-color: transparent;
+    border: 1px solid var(--accent-color400);
+  }
+
+  .todo-text {
+    color: white;
+  }
+
+  .time {
+    color: var(--accent-color400);
+  }
+
+  & button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: var(--accent-color400);
+    font-size: 14px;
+  }
+
+  .flex {
+    gap: 1.8rem;
+  }
+}
+
+.todos li:has(input:checked) .todo-text {
+  color: var(--accent-color200);
+  text-decoration: line-through;
+}
+
+.todo-item > * {
+  align-items: center;
+  gap: 1rem;
 }
