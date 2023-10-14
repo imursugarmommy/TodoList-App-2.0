@@ -1,6 +1,13 @@
 import React from "react";
 
-function InputForm({ todoItem, setTodoItem, setTime, setDay, addTodo }) {
+function InputForm({
+  todoItem,
+  setTodoItem,
+  // setTime,
+  // setDay,
+  setDateTime,
+  addTodo,
+}) {
   return (
     <div className="input-form flex">
       <div className="input-box">
@@ -12,13 +19,8 @@ function InputForm({ todoItem, setTodoItem, setTime, setDay, addTodo }) {
           onChange={(e) => setTodoItem(() => e.target.value)}
         />
         <input
-          type="date"
-          onChange={(e) => setDay(e.target.valueAsDate)}
-        />
-        <input
-          type="time"
-          className="fa-calender"
-          onChange={(e) => setTime(e.target.value)}
+          type="datetime-local"
+          onChange={(e) => setDateTime(e.target.value)}
         />
       </div>
       <button
