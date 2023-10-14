@@ -6,9 +6,13 @@ import { Main } from "./Main";
 function App() {
   return (
     <>
-      {/* <Nav />
-      <Header /> */}
-      <Main />
+      <div className="wrapper">
+        <Nav />
+        <div className="main">
+          <Header />
+          <Main />
+        </div>
+      </div>
     </>
   );
 }

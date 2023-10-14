@@ -34,7 +34,7 @@ export function Main() {
     const minutes = dateTimeValue.getMinutes();
     const dayOfWeekInt = dateTimeValue.getDay();
     const dayOfMonth = dateTimeValue.getDate();
-    const month = dateTimeValue.getMonth();
+    const month = dateTimeValue.getMonth() + 1;
     const year = dateTimeValue.getFullYear();
 
     const days = [
@@ -75,7 +75,7 @@ export function Main() {
 
     if (item.remainingHours <= 0 && item.remainingMinutes < 0) return;
 
-    setTodos((oldList) => [...oldList, item]);
+    setTodos((oldList) => [item, ...oldList]);
     setTodoItem("");
   }
 

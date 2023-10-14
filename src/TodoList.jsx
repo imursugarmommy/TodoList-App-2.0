@@ -5,16 +5,22 @@ function TodoList({ todos, toggleTodo, deleteTodo }) {
   return (
     <div className="todo-list">
       <ul className="todos">
-        {todos.map((todo) => {
-          return (
-            <TodoItem
-              key={todo.key}
-              todo={todo}
-              toggleTodo={toggleTodo}
-              deleteTodo={deleteTodo}
-            />
-          );
-        })}
+        {/* {todos.lenght === 0 ? ( */}
+        {
+          todos.map((todo) => {
+            return (
+              <TodoItem
+                key={todo.key}
+                todo={todo}
+                toggleTodo={toggleTodo}
+                deleteTodo={deleteTodo}
+              />
+            );
+          })
+          // ) : (
+          // <p className="no-todos">No todos here...</p>
+          // )
+        }
       </ul>
     </div>
   );
