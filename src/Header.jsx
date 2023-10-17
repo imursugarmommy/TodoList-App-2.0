@@ -1,25 +1,23 @@
 import React from "react";
 
-const changedTime = new Date();
-const day = changedTime.getDate();
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dez",
-];
-const month = months[changedTime.getMonth() + 1];
-const year = changedTime.getFullYear();
+export function Header({ lastEdited }) {
+  console.log(lastEdited || new Date());
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dez",
+  ];
+  const month = months[lastEdited.month + 1];
 
-export function Header() {
   return (
     <header>
       <div className="flex text">
@@ -46,7 +44,8 @@ export function Header() {
         </div>
       </div>
       <p className="benutzt">
-        Zuletzt benutzt am {day}. {month} {year}
+        Zuletzt bearbeitet am {lastEdited.day}.{lastEdited.month}.
+        {lastEdited.year} um {lastEdited.hour}:{lastEdited.minutes} Uhr
       </p>
     </header>
   );

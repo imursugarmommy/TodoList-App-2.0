@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import InputForm from "./InputForm";
 import TodoList from "./TodoList";
 
-export function Main() {
+export function Main({ setLastEdited }) {
   const [todoItem, setTodoItem] = useState("");
   const [todos, setTodos] = useState([]);
   const [deadline, setDeadline] = useState("");
@@ -16,6 +16,14 @@ export function Main() {
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
+
+    setLastEdited(() => ({
+      minutes: new Date().getMinutes(),
+      hour: new Date().getHours(),
+      day: new Date().getDate(),
+      month: new Date().getMonth(),
+      year: new Date().getFullYear(),
+    }));
   }, [todos]);
 
   function setDateTime(target) {

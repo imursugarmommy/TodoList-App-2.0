@@ -83,6 +83,9 @@ button {
 }
 
 :root {
+  --black: #000000;
+  --white: #ffffff;
+  --bx-shadow: rgba(0, 0, 0, 0.5);
   --primary-color400: #415ca8;
   --primary-color900: #162c6d;
   --accent-color200: #6589d8;
@@ -113,13 +116,11 @@ button {
 .ui-checkbox {
   --secondary-color: #fff;
   --primary-hover-color: #4096ff;
-  /* checkbox */
   --checkbox-diameter: 20px;
   --checkbox-border-radius: 5px;
   --checkbox-border-color: #6488d7;
   --checkbox-border-width: 1px;
   --checkbox-border-style: solid;
-  /* checkmark */
   --checkmark-size: 1.4;
 }
 
@@ -220,7 +221,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 
 input[type="text"]::placeholder {
-  color: white;
+  color: var(--white);
 }
 
 .input-form {
@@ -228,7 +229,6 @@ input[type="text"]::placeholder {
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 4fr 1fr;
-  padding-right: 2rem;
   margin-bottom: 2rem;
 
   .input-box {
@@ -248,7 +248,7 @@ input[type="text"]::placeholder {
       border-right: none;
       outline: none;
       background-color: var(--accent-color200);
-      color: white;
+      color: var(--white);
     }
 
     & input[type="datetime-local"] {
@@ -259,7 +259,7 @@ input[type="text"]::placeholder {
       outline: none;
       text-align: right;
       background-color: var(--accent-color200);
-      color: #fff;
+      color: var(--white);
       gap: 1rem;
     }
   }
@@ -269,7 +269,7 @@ input[type="text"]::placeholder {
     outline: none;
     border: none;
     background: var(--accent-color700);
-    color: white;
+    color: var(--white);
   }
 }
 
@@ -279,10 +279,6 @@ input[type="text"]::placeholder {
 
 .wrapper > * {
   flex-basis: 450px;
-}
-
-nav {
-  background-color: var(--primary-color900);
 }
 
 .main {
@@ -302,7 +298,7 @@ header {
 
   & h2 {
     font-size: 50px;
-    color: white;
+    color: var(--white);
     font-weight: 500;
     padding-bottom: 0.5rem;
   }
@@ -324,7 +320,7 @@ header {
 }
 
 .no-todos {
-  color: white;
+  color: var(--white);
   font-size: 20px;
   margin-left: 3rem;
   margin-top: 1rem;
@@ -359,7 +355,7 @@ header {
   width: 100%;
   justify-content: space-between;
   margin-block: 1rem;
-  box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.25);
+  box-shadow: 6px 6px 15px var(--bx-shadow);
 
   & input[type="checkbox"]:not(:checked) {
     background-color: transparent;
@@ -367,7 +363,7 @@ header {
   }
 
   .todo-text {
-    color: white;
+    color: var(--white);
   }
 
   .time {
@@ -412,8 +408,8 @@ header {
   font-size: 11px;
   width: 160px;
   text-align: center;
-  background-color: rgb(255, 255, 255);
-  color: black;
+  background-color: var(--white);
+  color: var(--black);
   padding: 0.5rem 0;
   border-radius: 6px;
   letter-spacing: 1px;
@@ -426,4 +422,9 @@ header {
   visibility: visible;
   opacity: 1;
   transition: opacity 400ms ease;
+}
+
+nav {
+  background-color: var(--primary-color900);
+  border-radius: 0 20px 20px 0;
 }
