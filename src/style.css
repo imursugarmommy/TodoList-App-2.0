@@ -38,7 +38,6 @@ body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
   font-family: "Poppins", sans-serif;
-  overflow-x: hidden;
   background: var(--primary-color400);
 }
 
@@ -85,7 +84,8 @@ button {
 :root {
   --black: #000000;
   --white: #ffffff;
-  --bx-shadow: rgba(0, 0, 0, 0.5);
+  --bx-shadow-white: rgba(255, 255, 255, 0.5);
+  --bx-shadow-black: rgba(0, 0, 0, 0.5);
   --bg-color200: #d9d9d9;
   --profile-grey: #a5a5a5;
   --primary-color400: #415ca8;
@@ -359,7 +359,7 @@ header {
   width: 100%;
   justify-content: space-between;
   margin-block: 1rem;
-  box-shadow: 6px 6px 15px var(--bx-shadow);
+  box-shadow: 6px 6px 15px var(--bx-shadow-black);
 
   & input[type="checkbox"]:not(:checked) {
     background-color: transparent;
@@ -434,7 +434,6 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* text-align: center; */
   display: flex;
   flex-direction: column;
   padding: 2rem;
@@ -489,7 +488,6 @@ nav {
   background-color: var(--accent-color500);
   display: flex;
   justify-content: space-between;
-
   margin-block: 1rem;
 
   & p {
@@ -542,7 +540,7 @@ nav {
 }
 
 .profile-pic {
-  height: 162px;
+  height: 180px;
   aspect-ratio: 1;
   display: grid;
   place-items: center;
@@ -560,25 +558,29 @@ nav {
   font-size: 80px;
   background-color: var(--bg-color200);
   color: var(--profile-grey);
-  height: 135px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
 }
 
 .add-picture {
   font-size: 40px;
-  color: var(--bg-color200);
-  background-color: var(--bx-shadow);
+  color: var(--bx-shadow-white);
+  background-color: var(--bx-shadow-black);
+  opacity: 0;
+  transition: 200ms ease;
+  z-index: 1001;
+
+  /* icon inside was kinda off idk */
+  transform: translate(-0.5px, -0.5px);
+}
+
+.profile-placeholder,
+.add-picture {
   height: 135px;
   aspect-ratio: 1;
   border-radius: 50%;
   display: grid;
   place-items: center;
   cursor: pointer;
-  opacity: 0;
-  transition: 200ms ease;
+  transform: translate(-0.5px, -0.5px);
 }
 
 .add-picture:hover {
@@ -600,6 +602,18 @@ circle {
   stroke-dashoffset: 150;
   transition: stroke-dashoffset 500ms ease;
 
-  -webkit-filter: drop-shadow(0 0 20px var(--accent-color700));
-  filter: drop-shadow(0 0 20px var(--accent-color700));
+  -webkit-filter: drop-shadow(0 0 5px var(--accent-color700));
+  filter: drop-shadow(0 0 5px var(--accent-color700));
+}
+
+.pic {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  height: 136px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
 }

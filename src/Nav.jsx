@@ -1,5 +1,6 @@
 import React from "react";
 import List from "./List";
+import image from "./images/image.png";
 
 export function Nav() {
   return (
@@ -14,6 +15,11 @@ export function Nav() {
               strokeLinecap="round"
             />
           </svg>
+          <img
+            src={image}
+            alt="image"
+            className="pic"
+          />
           <i class="fa-regular fa-user profile-placeholder"></i>
           <i class="fa-solid fa-camera add-picture"></i>
         </div>
