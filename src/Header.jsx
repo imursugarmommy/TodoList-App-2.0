@@ -1,7 +1,6 @@
 import React from "react";
 
 export function Header({ lastEdited }) {
-  console.log(lastEdited || new Date());
   const months = [
     "Jan",
     "Feb",
