@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import InputForm from "./InputForm";
 import TodoList from "./TodoList";
 
-export function Main({ setLastEdited }) {
+export function Main({ setLastEdited, todos, setTodos, setTaskCount }) {
   const [todoItem, setTodoItem] = useState("");
-  const [todos, setTodos] = useState([]);
   const [deadline, setDeadline] = useState("");
 
   useEffect(() => {
@@ -116,6 +115,7 @@ export function Main({ setLastEdited }) {
         todos={todos}
         toggleTodo={toggleTodo}
         deleteTodo={deleteTodo}
+        setTaskCount={setTaskCount}
       />
     </main>
   );

@@ -1,47 +1,21 @@
 import React from "react";
 import List from "./List";
-import image from "./images/image.png";
+import Profile from "./Profile";
+import Footer from "./Footer";
 
-export function Nav() {
+export function Nav({ taskCount }) {
   return (
     <nav>
-      <div className="profile">
-        <div className="profile-pic">
-          <svg className="progress-bar">
-            <circle
-              cx="50%"
-              cy="50%"
-              r="75"
-              strokeLinecap="round"
-            />
-          </svg>
-          <img
-            src={image}
-            alt="image"
-            className="pic"
-          />
-          <i class="fa-regular fa-user profile-placeholder"></i>
-          <i class="fa-solid fa-camera add-picture"></i>
-        </div>
-        <h2 className="name">Profile name</h2>
-      </div>
+      <Profile />
       <div className="lists">
         <ul>
+          <List taskCount={taskCount} />
+          <List />
           <List />
           <button className="add-list list-item">+ Add Todo List</button>
         </ul>
       </div>
-      <div className="footer flex">
-        <div className="setting">
-          <i class="fa-solid fa-gear"></i>Settings
-        </div>
-        <div className="templates">
-          <i class="fa-regular fa-bookmark"></i>Templates
-        </div>
-        <div className="search-lists">
-          <i class="fa-solid fa-magnifying-glass"></i>Search lists
-        </div>
-      </div>
+      <Footer />
     </nav>
   );
 }

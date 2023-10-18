@@ -5,13 +5,21 @@ import { Main } from "./Main";
 
 function App() {
   const [lastEdited, setLastEdited] = useState("");
+  const [todos, setTodos] = useState([]);
+  const [taskCount, setTaskCount] = useState(0);
+
   return (
     <>
       <div className="wrapper">
-        <Nav />
+        <Nav taskCount={taskCount} />
         <div className="main">
           <Header lastEdited={lastEdited} />
-          <Main setLastEdited={setLastEdited} />
+          <Main
+            setLastEdited={setLastEdited}
+            todos={todos}
+            setTodos={setTodos}
+            setTaskCount={setTaskCount}
+          />
         </div>
       </div>
     </>

@@ -1,7 +1,9 @@
 import React from "react";
 import TodoItem from "./TodoItem";
 
-function TodoList({ todos, toggleTodo, deleteTodo }) {
+function TodoList({ todos, toggleTodo, deleteTodo, setTaskCount }) {
+  setTaskCount(todos.length);
+
   return (
     <div className="todo-list">
       <ul className="todos">

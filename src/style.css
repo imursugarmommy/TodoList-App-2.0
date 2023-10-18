@@ -224,7 +224,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
-input[type="text"]::placeholder {
+.add::placeholder {
   color: var(--white);
 }
 
@@ -291,6 +291,10 @@ input[type="text"]::placeholder {
   flex-grow: 1;
 }
 
+.search-bar::placeholder {
+  color: var(--accent-color200);
+}
+
 header {
   margin-bottom: 5rem;
 
@@ -311,6 +315,18 @@ header {
   svg {
     color: var(--accent-color200);
     cursor: pointer;
+  }
+
+  .search-bar {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: var(--accent-color200);
+    padding: 0.4rem 1rem;
+    position: relative;
+    border-bottom: 3px solid var(--accent-color200);
+    transform-origin: right;
+    transition: 1s ease;
   }
 
   .bearbeitet {
@@ -406,7 +422,7 @@ header {
 .fa-calendar-xmark::after {
   content: "No time selected";
   position: absolute;
-  top: -35px;
+  top: -30px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 11px;
@@ -489,6 +505,7 @@ nav {
   display: flex;
   justify-content: space-between;
   margin-block: 1rem;
+  cursor: pointer;
 
   & p {
     color: var(--accent-color200);
