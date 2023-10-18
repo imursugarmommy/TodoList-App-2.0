@@ -507,6 +507,16 @@ nav {
   margin-block: 1rem;
   cursor: pointer;
 
+  .box {
+    color: var(--accent-color400);
+    gap: 1rem;
+    transition: 200ms ease;
+
+    &:hover {
+      color: white;
+    }
+  }
+
   & p {
     color: var(--accent-color200);
     font-size: 14px;
@@ -633,4 +643,96 @@ circle {
   aspect-ratio: 1;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1010;
+}
+
+.list-input::after {
+  content: "";
+  height: 20px;
+  aspect-ratio: 1;
+  background-color: inherit;
+  position: absolute;
+  top: 240px;
+  left: -10px;
+  rotate: -45deg;
+  clip-path: polygon(0 0, 100% 0, 0% 100%);
+}
+
+.list-input {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 470px;
+  height: 80%;
+  width: 1000px;
+  background-color: rgba(0, 0, 0, 0.952);
+  color: white;
+  padding: 3rem 4rem;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1011;
+
+  & h1 {
+    font-weight: 400;
+    font-size: 40px;
+  }
+
+  & input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid white;
+    padding: 0.5rem 1.5rem;
+    margin-block: 3rem;
+    color: white;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .settings {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 1rem;
+
+    .active {
+      height: fit-content;
+    }
+
+    & > * {
+      padding-top: 0.5rem;
+      cursor: pointer;
+      height: 40px;
+      overflow: hidden;
+    }
+
+    & i {
+      font-size: 14px;
+      margin-left: 0.5rem;
+      margin-bottom: 0.8rem;
+      padding-inline: 0.5rem;
+    }
+  }
+
+  & button {
+    margin-top: 2rem;
+    background-color: var(--accent-color800);
+    border: none;
+    outline: none;
+    color: white;
+    padding: 0.5rem 0;
+    border-radius: 10px;
+  }
 }
