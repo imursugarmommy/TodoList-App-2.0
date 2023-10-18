@@ -1,58 +1,95 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import InputForm from "./InputForm";
+import TodoList from "./TodoList";
 
-export function Main() {
+export function Main({ setLastEdited, todos, setTodos, setTaskCount }) {
   const [todoItem, setTodoItem] = useState("");
-  const [todos, setTodos] = useState([]);
   const [deadline, setDeadline] = useState("");
-  const date = new Date();
 
-  function setTime(target) {
-    const selectedTime = target;
-    const hour = selectedTime.split(":")[0];
-    const minutes = selectedTime.split(":")[1];
+  useEffect(() => {
+    const storedTodos = localStorage.getItem("todos");
+    if (storedTodos) {
+      setTodos(JSON.parse(storedTodos));
+    }
+  }, []);
 
-    setDeadline(() => [
-      {
-        hour,
-        minutes,
-      },
-    ]);
-  }
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
 
-  function addTodo() {
-    if (!deadline) return;
+    setLastEdited(() => ({
+      minutes: new Date().getMinutes(),
+      hour: new Date().getHours(),
+      day: new Date().getDate(),
+      month: new Date().getMonth(),
+      year: new Date().getFullYear(),
+    }));
+  }, [todos]);
 
-    const currentHour = date.getHours();
-    const currentMinutes = date.getMinutes();
-
-    // ? erst beim zweiten mal wird setRemaining... gecallt
-
-    const remainingHours = parseInt(deadline[0].hour) - currentHour;
-    const remainingMinutes = parseInt(deadline[0].minutes) - currentMinutes;
-
-    if (remainingHours < 0) {
-      // invalid time selected
+  function setDateTime(target) {
+    if (target === null) {
+      setDeadline(() => ({
+        ...deadline,
+        date: undefined,
+        dayOfWeek: undefined,
+        selectedTime: undefined,
+      }));
       return;
     }
 
+    const dateTimeValue = new Date(target);
+    const hour = dateTimeValue.getHours();
+    const minutes = dateTimeValue.getMinutes();
+    const dayOfWeekInt = dateTimeValue.getDay();
+    const dayOfMonth = dateTimeValue.getDate();
+    const month = dateTimeValue.getMonth() + 1;
+    const year = dateTimeValue.getFullYear();
+
+    const days = [
+      "Sonntag",
+      "Montag",
+      "Dienstag",
+      "Mittwoch",
+      "Donnerstag",
+      "Freitag",
+      "Samstag",
+    ];
+    const date = dayOfMonth + "." + month + "." + year;
+    const dayOfWeek = days[dayOfWeekInt];
+    const selectedTime =
+      (hour < 10 ? "0" + hour : hour) +
+      ":" +
+      (minutes < 10 ? "0" + minutes : minutes);
+
+    setDeadline(() => ({
+      ...deadline,
+      date,
+      dayOfWeek,
+      selectedTime,
+    }));
+  }
+
+  function addTodo() {
     if (!todoItem) return;
 
     const item = {
-      id: Math.floor(Math.random() * 5000),
+      key: Math.floor(Math.random() * 5000),
       value: todoItem,
       checked: false,
-      remainingHours,
-      remainingMinutes,
+      dayOfWeek: deadline.dayOfWeek,
+      date: deadline.date,
+      selectedTime: deadline.selectedTime,
     };
 
-    setTodos((oldList) => [...oldList, item]);
+    if (item.remainingHours <= 0 && item.remainingMinutes < 0) return;
+
+    setTodos((oldList) => [item, ...oldList]);
     setTodoItem("");
   }
 
-  function toggleTodo(id, completed) {
+  function toggleTodo(key, completed) {
     setTodos((currentTodos) => {
       return currentTodos.map((todo) => {
-        if (todo.id === id) {
+        if (todo.key === key) {
           return { ...todo, completed };
         }
 
@@ -61,71 +98,25 @@ export function Main() {
     });
   }
 
-  function deleteTodo(id) {
-    const newArray = todos.filter((todo) => todo.id !== id);
+  function deleteTodo(key) {
+    const newArray = todos.filter((todo) => todo.key !== key);
     setTodos(newArray);
   }
 
   return (
     <main>
-      <div className="input-form flex">
-        <div className="input-box">
-          <input
-            type="text"
-            placeholder="Create new todo"
-            value={todoItem}
-            onChange={(e) => setTodoItem(() => e.target.value)}
-          />
-          <input
-            type="time"
-            className="fa-calender"
-            onChange={(e) => setTime(e.target.value)}></input>
-        </div>
-        <button
-          className="add"
-          onClick={() => addTodo()}>
-          Add todo
-        </button>
-      </div>
-      <div className="todo-list">
-        <ul className="todos">
-          {todos.map((todo) => {
-            return (
-              <li
-                className="todo-item flex"
-                key={todo.id}>
-                <div className="flex">
-                  <input
-                    type="checkbox"
-                    className="checkbox ui-checkbox"
-                    onClick={(e) => toggleTodo(todo.id, e.target.checked)}
-                  />
-                  <p className="todo-text">{todo.value}</p>
-                </div>
-                <div className="flex">
-                  <p className="time">
-                    <span>
-                      {todo.remainingMinutes < 0
-                        ? todo.remainingHours - 1
-                        : todo.remainingHours}
-                      h
-                    </span>
-                    <span>
-                      {todo.remainingMinutes < 0
-                        ? todo.remainingMinutes + 60
-                        : todo.remainingMinutes}
-                      min
-                    </span>
-                  </p>
-                  <button onClick={() => deleteTodo(todo.id)}>
-                    <i className="fa-solid fa-x xmark"></i>
-                  </button>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <InputForm
+        todoItem={todoItem}
+        setTodoItem={setTodoItem}
+        setDateTime={setDateTime}
+        addTodo={addTodo}
+      />
+      <TodoList
+        todos={todos}
+        toggleTodo={toggleTodo}
+        deleteTodo={deleteTodo}
+        setTaskCount={setTaskCount}
+      />
     </main>
   );
 }
