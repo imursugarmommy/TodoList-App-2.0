@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Header({ lastEdited }) {
+export function Header({ lastEdited, inputValue }) {
   const months = [
     "Jan",
     "Feb",
@@ -20,6 +20,8 @@ export function Header({ lastEdited }) {
   return (
     <header>
       <div className="flex text">
+        {/* Temporaer */}
+        {/* Variable soon */}
         <h2 className="list-name">Todo List</h2>
         <div className="icons">
           <svg

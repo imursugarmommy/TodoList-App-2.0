@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TodoItem from "./TodoItem";
 
 function TodoList({ todos, toggleTodo, deleteTodo, setTaskCount }) {
-  setTaskCount(todos.length);
+  useEffect(() => {
+    setTaskCount(todos.length);
+  }, [todos]);
 
   return (
     <div className="todo-list">

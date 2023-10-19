@@ -1,15 +1,55 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-export default function List({ taskCount, deleteList, list }) {
+export default function List({
+  taskCount,
+  deleteList,
+  lists,
+  setInputValue,
+  toggleActive,
+}) {
+  useEffect(() => {
+    setInputValue((prev) => {
+      return { ...prev, [lists.key]: lists.value };
+    });
+  }, []);
+
   return (
-    <li className="list-item no-active">
+    <li
+      onClick={(e) => toggleActive(e.target)}
+      key={lists.key}
+      className="list-item no-active"
+      style={{ background: lists.backgroundClr }}>
       <div className="box flex">
-        <p className="tasks">{taskCount ? taskCount : 0} Tasks</p>
-        <i className="fa-solid fa-trash"></i>
+        <p
+          className="tasks"
+          style={{ color: lists.accentClr }}>
+          {!lists.maxTodos || lists.maxTodos === 0
+            ? taskCount
+            : taskCount + "/" + lists.maxTodos}{" "}
+          Tasks
+        </p>
+        <i
+          className="fa-solid fa-trash"
+          style={{ color: lists.accentClr }}
+          onClick={() => deleteList(lists.key)}></i>
       </div>
-      <h3 className="list-name">Todo List</h3>
-      <div className="line">
-        <div className="progress"></div>
+      <h3
+        className="list-name"
+        style={{ color: lists.textClr }}>
+        {!lists.value ? "New List" : lists.value}
+      </h3>
+      <div
+        className="line"
+        style={{ background: lists.accentClr }}>
+        <div
+          className="progress"
+          style={{
+            background: lists.accentClr,
+            boxShadow:
+              "0 0 15px " + lists.accent !== ""
+                ? lists.accent
+                : "var(--accent-clr700)",
+          }}></div>
       </div>
     </li>
   );
