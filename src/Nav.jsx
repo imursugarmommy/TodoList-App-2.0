@@ -3,8 +3,7 @@ import List from "./List";
 import Profile from "./Profile";
 import Footer from "./Footer";
 
-export function Nav({ taskCount, setInputValue }) {
-  const [lists, setLists] = useState([]);
+export function Nav({ taskCount, setInputValue, lists, setLists }) {
   const [modal, setModal] = useState(false);
   const [rangeValue, setRangeValue] = useState(0);
   const [values, setValues] = useState({

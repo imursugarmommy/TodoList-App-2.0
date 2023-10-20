@@ -292,7 +292,14 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 .main {
   height: 100vh;
   padding: 4rem 6rem;
+  flex-basis: 800px;
   flex-grow: 1;
+  width: calc(100vw - 450px);
+}
+
+.list-mains {
+  width: 100vw;
+  height: 100vh;
 }
 
 .search-bar::placeholder {

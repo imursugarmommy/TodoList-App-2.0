@@ -9,7 +9,7 @@ export default function List({
 }) {
   useEffect(() => {
     setInputValue((prev) => {
-      return { ...prev, [lists.key]: lists.value };
+      return { ...prev, value: lists.value };
     });
   }, []);
 
